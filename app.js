@@ -4,6 +4,8 @@ var path = require('path');
 var cookieParser = require('cookie-parser');
 var logger = require('morgan');
 
+require('dotenv').config()
+
 var indexRouter = require('./routes/index');
 var usersRouter = require('./routes/users');
 
@@ -11,7 +13,10 @@ var app = express();
 
 //Set up mongoose connection
 var mongoose = require('mongoose');
-var mongoDB = 'mongodb+srv://mongoAdmin:squashsquatch20200713@cluster0.bgnb8.mongodb.net/local_library?retryWrites=true&w=majority';
+var host = process.env.DB_HOST;
+var username = process.env.DB_USER;
+var password = process.env.DB_PASS;
+var mongoDB = 'mongodb+srv://' + username + ':' + password + '@cluster0.bgnb8.mongodb.net/' + host + '?retryWrites=true&w=majority';
 mongoose.connect(mongoDB, { useNewUrlParser: true });
 var db = mongoose.connection;
 db.on('error', console.error.bind(console, 'MongoDB connection error:'));
